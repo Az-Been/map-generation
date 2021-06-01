@@ -1,16 +1,16 @@
-# Génération de terrain aléatoire
+# Random map generation
 import random, pygame, sys
 
 class Tile:
     collection=[]
-    def __init__(self, numero, left, right, top, bottom):
+    def __init__(self, number, left, right, top, bottom):
         """
-        numero = numéro dans la grille
+        number = grid number
         direction = - FULL / NONE
                     - LEFT / RIGHT
                     - TOP / BOTTOM
         """
-        self.numero=numero
+        self.number=number
         self.LEFT=left
         self.RIGHT=right
         self.TOP=top
@@ -18,7 +18,7 @@ class Tile:
         Tile.collection.append(self)
 
     def __repr__(self):
-        return f"<Tile N°{self.numero}>"
+        return f"<Tile N°{self.number}>"
     def opposite(side):
         return {
         "TOP":"BOTTOM",
@@ -40,16 +40,16 @@ class Tile:
             if x==0:
                 correct=[i for i in Tile.collection if getattr(i,"BOTTOM")!="NONE" and getattr(i, "RIGHT")!="NONE"]
             else:
-                left_tile=[i for i in Tile.collection if i.numero==main.map[-1][-1]][0]
+                left_tile=[i for i in Tile.collection if i.number==main.map[-1][-1]][0]
                 correct=[i for i in Tile.collection if getattr(i, "LEFT")==getattr(left_tile, "RIGHT")]
         else:
-            top_tile=[i for i in Tile.collection if i.numero==main.map[-2][x]][0]
+            top_tile=[i for i in Tile.collection if i.number==main.map[-2][x]][0]
             if x==0:
                 correct=[i for i in Tile.collection if getattr(i, "TOP")==getattr(top_tile, "BOTTOM")]
             else:
-                left_tile=[i for i in Tile.collection if i.numero==main.map[-1][-1]][0]
+                left_tile=[i for i in Tile.collection if i.number==main.map[-1][-1]][0]
                 correct=[i for i in Tile.collection if getattr(i, "LEFT")==getattr(left_tile, "RIGHT") and getattr(i, "TOP")==getattr(top_tile, "BOTTOM")]
-        return random.choice(correct).numero if correct else 17
+        return random.choice(correct).number if correct else 17
 
 class Display:
     def __init__(self, grid=False):
